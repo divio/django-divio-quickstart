@@ -6,5 +6,4 @@ boto3==1.14.49
 
 psycopg2==2.8.5
 
-# Select one of the following for the gateway server
 uwsgi==2.0.19.1
