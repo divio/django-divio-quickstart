@@ -1,6 +1,7 @@
 # Django Divio quickstart
 
-A Dockerised Django project, ready to deploy on Divio
+A Dockerised Django project, ready to deploy on Divio or another Docker-based cloud platform, and run
+locally in Docker on your own machine. A Divio account is not required.
 
 This version uses Python 3.8 running and the most up-to-date version of Django 3.1.
 
