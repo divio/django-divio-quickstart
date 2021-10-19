@@ -16,6 +16,11 @@ services:
     links:
       - "database_default"
     env_file: .env-local
+    depends_on:
+      - database_default
+      - rabbitmq
+      - celeryworker
+      - celerybeat
 
   database_default:
     # Select one of the following db configurations for the database
@@ -26,3 +31,35 @@ services:
       SERVICE_MANAGER: "fsm-postgres"
     volumes:
       - ".:/app:rw"
+
+  rabbitmq:
+    image: rabbitmq:3.5-management
+    hostname: rabbitmq
+    ports:
+      - "15672:15672"
+    expose:
+      - "15672"
+    environment:
+      RABBITMQ_ERLANG_COOKIE: secret_cookie_value
+
+  celeryworker:
+    build: "."
+    links:
+      - "database_default:postgres"  # the actual value will depend on your project's database
+      - "rabbitmq:rabbitmq"
+    volumes:
+      - ".:/app:rw"
+      - "./data:/data:rw"
+    command: aldryn-celery worker
+    env_file: .env-local
+
+  celerybeat:
+    build: "."
+    links:
+      - "database_default:postgres"  # the actual value will depend on your project's database
+      - "rabbitmq:rabbitmq"
+    volumes:
+      - ".:/app:rw"
+      - "./data:/data:rw"
+    command: aldryn-celery beat
+    env_file: .env-local

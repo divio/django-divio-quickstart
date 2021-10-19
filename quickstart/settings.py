@@ -52,6 +52,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'quickstart',
+    # Celery DB backed admin & monitoring tools
+    'django_celery_results',
+    'django_celery_beat',
 ]
 
 MIDDLEWARE = [
@@ -151,3 +155,29 @@ DEFAULT_FILE_STORAGE = 'quickstart.settings.DefaultStorageClass'
 # only required for local file storage and serving, in development
 MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join('/data/media/')
+
+# Celery Configuration Options
+ENABLE_CELERY = bool(os.environ.get('ENABLE_CELERY', True))
+CELERY_TIMEZONE = TIME_ZONE
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 30 * 60
+CELERY_RESULT_BACKEND = os.environ.get('CELERY_RESULT_BACKEND', 'django-db')
+CELERY_BROKER_URL = os.environ.get('DEFAULT_AMQP_BROKER_URL', 'amqp://guest:guest@rabbitmq:5672/')
+CELERY_BROKER_TRANSPORT_OPTIONS = {
+    'max_retries': 4,
+    'interval_start': 0,
+    'interval_step': 0.5,
+    'interval_max': 3,
+}
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = os.environ.get('CELERY_TASK_SERIALIZER', 'json')
+CELERY_RESULT_SERIALIZER = os.environ.get('CELERY_RESULT_SERIALIZER', 'json')
+CELERY_BEAT_SCHEDULER = os.environ.get("CELERY_BEAT_SCHEDULER", "django_celery_beat.schedulers:DatabaseScheduler")
+
+CELERY_TASK_RESULT_EXPIRES = int(os.environ.get('CELERY_TASK_RESULT_EXPIRES', 5*60*60))
+CELERY_ACKS_LATE = bool(os.environ.get('CELERY_ACKS_LATE', True))
+CELERY_TRACK_STARTED = bool(os.environ.get('CELERY_TRACK_STARTED', True))
+CELERY_DISABLE_RATE_LIMITS = bool(os.environ.get('CELERY_DISABLE_RATE_LIMITS', True))
+CELERYD_REDIRECT_STDOUTS_LEVEL = os.environ.get('CELERY_REDIRECT_STDOUTS_LEVEL', 'INFO')
+CELERYD_CONCURRENCY = os.environ.get('CELERYD_CONCURRENCY', '2')
+CELERY_SEND_EVENTS = bool(os.environ.get('CELERY_SEND_EVENTS', True))

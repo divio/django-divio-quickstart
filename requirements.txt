@@ -7,3 +7,8 @@ boto3==1.14.49
 psycopg2==2.8.5
 
 uwsgi==2.0.19.1
+
+# celery --> https://github.com/what-digital/divio/issues/46#issuecomment-823321923
+celery==5.1.2
+django-celery-results==2.0.1
+django-celery-beat==2.2.1
