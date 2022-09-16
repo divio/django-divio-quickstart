@@ -18,7 +18,7 @@ open http://127.0.0.1:8000/admin
 ```
 
 For a more complete how-to guide for this project, see [Deploy a new Django project using the Divio quickstart
-repository](https://docs.divio.com/en/latest/how-to/django-deploy-quickstart/) in the [Divio Developer
+repository](https://docs.divio.com/en/latest/how-to/quickstart-django/) in the [Divio Developer
 Handbook](https://docs.divio.com).
 
 
@@ -27,4 +27,5 @@ Handbook](https://docs.divio.com).
 Built-in options are available for using Postgres/MySQL, uWSGI/Gunicorn/Guvicorn, etc.
 
 Again, see [Deploy a new Django project using the Divio quickstart
-repository](https://docs.divio.com/en/latest/how-to/django-deploy-quickstart/) for more guidance on customisation.
+repository](https://docs.divio.com/en/latest/how-to/quickstart-django/) for more guidance 
+on customisation.
